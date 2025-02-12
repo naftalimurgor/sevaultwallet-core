@@ -6,7 +6,7 @@ lib/**/*.js.map
 typings/
 .env
 coverage/
-
+lib/
 # Node.js dependency directory
 node_modules/
 admin.json
