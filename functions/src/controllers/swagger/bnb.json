@@ -1,0 +1,576 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Binance Smart Chain API",
+    "version": "1.0.0",
+    "description": "API for handling BSC wallet operations, including wallet creation, balance retrieval, and transaction processing."
+  },
+  "paths": {
+    "/wallet/create": {
+      "get": {
+        "summary": "Create a new BSC wallet",
+        "operationId": "createWallet",
+        "responses": {
+          "200": {
+            "description": "Wallet created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "privateKey": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/balance/get": {
+      "get": {
+        "summary": "Retrieve wallet balance",
+        "operationId": "getBalance",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Balance retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/bnb/create": {
+      "post": {
+        "summary": "Send a BNB or USDT transaction",
+        "operationId": "sendTransaction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "string"
+                  },
+                  "privateKey": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to",
+                  "amount",
+                  "privateKey"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "txHash": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/wbgl/balance/get": {
+      "post": {
+        "summary": "Retrieve WBGL-BNB balance",
+        "operationId": "wbglBNBBalanceHandler",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "WBGL-BNB balance retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "object",
+                      "properties": {
+                        "usd": {
+                          "type": "number"
+                        },
+                        "balance": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/wbgl/history/get": {
+      "post": {
+        "summary": "Retrieve WBGL BEP-20 transactions",
+        "operationId": "WBGLBEP20Explorer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "WBGL BEP-20 transactions retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tx": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/wbgl/create": {
+      "post": {
+        "summary": "Send WBGL on BNB Chain",
+        "operationId": "sendWBGLBNBHandler",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "privateKey": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "to",
+                  "privateKey"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "txHash": {
+                      "type": "string"
+                    },
+                    "fee": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/usdt/create": {
+      "post": {
+        "summary": "Send BUSDT Transaction",
+        "description": "Transfers Binance-Pegged USDT (BUSDT) to a recipient address.",
+        "operationId": "sendBUSDT",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "description": "Amount of BUSDT to send"
+                  },
+                  "to": {
+                    "type": "string",
+                    "format": "address",
+                    "description": "Recipient's BSC address"
+                  },
+                  "privateKey": {
+                    "type": "string",
+                    "description": "Sender's private key"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "to",
+                  "privateKey"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "txHash": {
+                      "type": "string",
+                      "description": "Transaction hash"
+                    },
+                    "fee": {
+                      "type": "string",
+                      "description": "Estimated transaction fee in ETH"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Transaction failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tx/bnb/history/get": {
+      "post": {
+        "summary": "Get BSC transactions",
+        "description": "Retrieves the list of transactions for a given Binance Smart Chain (BSC) address.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string",
+                    "description": "BSC address to fetch transaction history for.",
+                    "example": "0x1234567890abcdef1234567890abcdef12345678"
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tx": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "tx_id": {
+                            "type": "string",
+                            "description": "Transaction hash"
+                          },
+                          "timestamp": {
+                            "type": "integer",
+                            "description": "Transaction timestamp"
+                          },
+                          "confirmations": {
+                            "type": "integer",
+                            "description": "Number of confirmations"
+                          },
+                          "amount": {
+                            "type": "string",
+                            "description": "Transaction amount in BNB"
+                          },
+                          "fee": {
+                            "type": "string",
+                            "description": "Transaction fee in BNB"
+                          },
+                          "to": {
+                            "type": "string",
+                            "description": "Recipient address"
+                          },
+                          "from": {
+                            "type": "string",
+                            "description": "Sender address"
+                          },
+                          "block_height": {
+                            "type": "integer",
+                            "description": "Block number of the transaction"
+                          },
+                          "coinbase": {
+                            "type": "boolean",
+                            "description": "Indicates if transaction is a coinbase transaction"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "description": "Transaction index"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Response message from BscScan"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates success or failure"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/usdt/balance/get": {
+      "post": {
+        "summary": "Get BUSDT Balance",
+        "description": "Fetches the BUSDT balance of a given address.",
+        "operationId": "getBUSDTBalance",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string",
+                    "description": "The wallet address to check balance for.",
+                    "example": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with balance in USD.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "object",
+                      "properties": {
+                        "usd": {
+                          "type": "number",
+                          "description": "The balance in USD."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request due to an error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "null",
+                      "description": "Null in case of an error."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

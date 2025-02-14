@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sevault Wallet API",
+    "version": "1.0.0",
+    "description": "API documentation for Sevault Wallet services"
+  },
+  "paths": {
+    "/stats/health": {
+      "get": {
+        "summary": "Health Check",
+        "description": "Returns '0k' if the service is running correctly.",
+        "responses": {
+          "200": {
+            "description": "Service is healthy",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "0k"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

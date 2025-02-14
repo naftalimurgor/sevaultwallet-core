@@ -1,0 +1,201 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bitgesell Wallet API",
+    "version": "1.0.0",
+    "description": "API for managing Bitgesell wallets, transactions, and balances."
+  },
+  "paths": {
+    "/wallet/create": {
+      "post": {
+        "summary": "Create Bitgesell accounts",
+        "operationId": "createBitgesellAccounts",
+        "responses": {
+          "200": {
+            "description": "Successfully created accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBitgesellAccountsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/dashboard/get": {
+      "post": {
+        "summary": "Get dashboard information",
+        "operationId": "dashboardHandler",
+        "responses": {
+          "200": {
+            "description": "Dashboard data retrieved successfully"
+          }
+        }
+      }
+    },
+    "/tx/{address}": {
+      "get": {
+        "summary": "Get transaction history",
+        "operationId": "txHistoryHandler",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction history retrieved successfully"
+          }
+        }
+      }
+    },
+    "/tx/create": {
+      "post": {
+        "summary": "Build and broadcast a BGL transaction",
+        "operationId": "bglTxBuilderHandler",
+        "responses": {
+          "200": {
+            "description": "Transaction successfully broadcasted"
+          }
+        }
+      }
+    },
+    "/wallet/update": {
+      "post": {
+        "summary": "Import a wallet using a mnemonic",
+        "operationId": "importWalletHandler",
+        "responses": {
+          "200": {
+            "description": "Wallet successfully imported"
+          }
+        }
+      }
+    },
+    "/wallet/new/update": {
+      "post": {
+        "summary": "Import an account from seed phrase or private key",
+        "operationId": "importFromPkeyOrSeedPhraseHandler",
+        "responses": {
+          "200": {
+            "description": "Account successfully imported"
+          }
+        }
+      }
+    },
+    "/wallet/create/index": {
+      "post": {
+        "summary": "Import an account from a seed phrase and index",
+        "operationId": "importAccountHandler",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "seedphrase": {
+                    "type": "string"
+                  },
+                  "index": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "seedphrase",
+                  "index"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account successfully imported"
+          }
+        }
+      }
+    },
+    "/wallet/balance": {
+      "post": {
+        "summary": "Get BGL account balance",
+        "operationId": "BGLaccountBalanceHandler",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "privateKey": {
+                    "type": "string",
+                    "description": "The private key to retrieve the balance for."
+                  }
+                },
+                "required": [
+                  "privateKey"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Balance retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "object",
+                      "properties": {
+                        "usd": {
+                          "type": "number"
+                        },
+                        "balance": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateBitgesellAccountsResponse": {
+        "type": "object",
+        "properties": {
+          "accounts": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "mnemonic": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
